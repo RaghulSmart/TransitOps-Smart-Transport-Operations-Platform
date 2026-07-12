@@ -1,0 +1,29 @@
+{
+  "name": "transitops",
+  "version": "1.0.0",
+  "description": "A centralized platform that allows organizations to manage the complete lifecycle of their transport operations from vehicle registration and driver management to dispatching, maintenance, fuel logging, and analytics.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bootstrap-icons": "^1.13.1",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "method-override": "^3.0.0",
+    "multer": "^2.2.0",
+    "mysql2": "^3.22.6",
+    "uuid": "^14.0.1"
+  }
+}
