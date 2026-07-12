@@ -9,6 +9,7 @@ exports.loginPage = async (req, res) => {
             return res.redirect("/dashboard");
         }
         res.render("layouts/auth", {
+            layout : false,
             title: "Login"
         });
     } catch (err) {

@@ -1,0 +1,152 @@
+<!-- Add Button -->
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vehicleModal">
+
+    <i class="bi bi-plus-circle"></i>
+
+    Add Vehicle
+
+</button>
+<!-- Add Button Ends -->
+
+<!-- Create Modal-->
+<div class="modal fade modal-lg" id="vehicleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Create a new vehicle</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="registration_no" class="form-label">Registration Number</label>
+                <input type="text" minlength="8" maxlength="10" class="form-control" id="registration_no" placeholder="TN68AB1143" required>
+            </div>
+            <div class="mb-3">
+                <label for="vehicle_model">Select Vehicle Model</label>
+                <select class="form-select" id="vehicle_model">
+                    <% for(let vehicle_model of vehicle_models) { %>
+                        <option value="<%-vehicle_model.id%>"><%- vehicle_model.model %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="vehicle_type">Select Vehicle Type</label>
+                <select class="form-select" id="vehicle_type">
+                    <% for(let vehicle_type of vehicle_types) { %>
+                        <option value="<%-vehicle_type.id%>"><%- vehicle_type.type %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="odometer" class="form-label">Enter Odometer</label>
+                <input type="number" min="0" class="form-control" id="odometer" placeholder="Enter the current odometer" required>
+            </div>
+            <div class="mb-3">
+                <label for="max_load_capacity" class="form-label">Enter Maximum Load Capacity (KG)</label>
+                <input type="number" min="1" max="500000" class="form-control" id="max_load_capacity" placeholder="Enter Maximum Load Capacity" required>
+            </div>
+            <div class="mb-3">
+                <label for="acquisition_cost" class="form-label">Enter Acquisition Cost</label>
+                <input type="number" min="0" class="form-control" id="acquisition_cost" placeholder="Enter Acquisition Cost" required>
+            </div>
+            <div class="mb-3">
+                <label for="vehicle_type">Status</label>
+                <select class="form-select" id="vehicle_status">
+                    <% for(let status of vehicle_status) { %>
+                        <option value="<%-status.value%>"><%- status.text %></option>
+                    <% } %>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="save-vehicle">Save changes</button>
+        </div>
+        </div>
+    </div>
+
+</div>
+<!-- Create Modal Ends -->
+
+
+<table id="vehicleTable">
+
+    <thead>
+
+        <tr>
+
+            <th>#</th>
+
+            <th>Registration</th>
+
+            <th>Name</th>
+
+            <th>Type</th>
+
+            <th>Capacity</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <% vehicles.forEach(function(vehicle,index){ %>
+
+            <tr>
+
+                <td>
+
+                    <%= index+1 %>
+
+                </td>
+
+                <td>
+
+                    <%= vehicle.registration_no %>
+
+                </td>
+
+                <td>
+
+                    <%= vehicle.vehicle_name %>
+
+                </td>
+
+                <td>
+
+                    <%= vehicle.vehicle_type %>
+
+                </td>
+
+                <td>
+
+                    <%= vehicle.max_load_capacity %> KG
+
+                </td>
+
+                <td>
+
+                    Status Badge
+
+                </td>
+
+                <td>
+
+                    Edit
+
+                    Delete
+
+                </td>
+
+            </tr>
+
+            <% }) %>
+
+    </tbody>
+
+</table>
