@@ -1,27 +1,110 @@
-                <h2>
+<h2>
 
-                    Dashboard
+    Dashboard
 
-                </h2>
+</h2>
 
-                <hr>
+<hr>
 
-                <h4>
+<h4>
 
-                    Welcome
+    Welcome
 
-                    <%= user.name %>
+    <%= user.name %>
 
-                </h4>
+</h4>
 
-                <p>
+<p>
 
-                    Role :
+    Role :
 
-                    <strong>
+    <strong>
 
-                        <%= user.role %>
+        <%= user.role %>
 
-                    </strong>
+    </strong>
 
-                </p>
+</p>
+<div class="row">
+    <div class="card col-4 m-5" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Vehicles Overview</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let vehicle of vehicles) {%>
+                        <tr>
+                            <td>
+                                <span class="badge bg-<%= display_vehicle_status[vehicle.status].class %>">
+                                    <%= display_vehicle_status[vehicle.status].text %>
+                                </span>                            
+                            </td>
+                            <td>
+                                <%= vehicle.overview%>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card col-4 m-5" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Drivers Overview</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let driver of drivers) {%>
+                        <tr>
+                            <td>
+                                <span class="badge bg-<%= display_driver_status[driver.status].class %>">
+                                    <%= display_driver_status[driver.status].text %>
+                                </span>
+                            </td>
+                            <td>
+                                <%= driver.overview%>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card col-4 m-5" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Trips Overview</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let trip of trips) {%>
+                        <tr>
+                            <td>
+                                <span class="badge bg-<%= display_trip_status[trip.status].class %>">
+                                     <%= display_trip_status[trip.status].text %>
+                                </span>
+                            </td>
+                            <td>
+                                <%= trip.overview%>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
