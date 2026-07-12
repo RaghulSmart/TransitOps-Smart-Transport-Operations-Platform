@@ -1,12 +1,41 @@
-<!-- Add Button -->
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vehicleModal">
+<div class="row mb-5">
+    <div class="col-3">
+        <label class="form-label" for="status_filter">Filter Status</label>
+        <select id="status_filter" class="form-control">
+            <option value="">All</option>
+            <% for(let vehicle_status in display_vehicle_status) {%>
+                <option value="<%-display_vehicle_status[vehicle_status].text%>"><%-display_vehicle_status[vehicle_status].text%></option>
+            <%} %>
+        </select>
+    </div>
 
-    <i class="bi bi-plus-circle"></i>
+    <div class="col-3">
+        <label class="form-label" for="vehicle_type_filter">Filter Vehicle Type</label>
+        <select id="vehicle_type_filter" class="form-control">
+            <option value="">All</option>
+            <% for(let vehicle_type of vehicle_types) {%>
+                <option value="<%-vehicle_type.type%>"><%-vehicle_type.type%></option>
+            <%} %>
+        </select>
+    </div>
 
-    Add Vehicle
+    <div class="col-3">
+        <label for="search_registration_no" class="form-label">Search Registration Number</label>
+        <input type="text" minlength="8" maxlength="10" class="form-control" id="search_registration_no" placeholder="TN68AB1143" required>
+    </div>
 
-</button>
-<!-- Add Button Ends -->
+    <!-- Add Button -->
+     <div class="col-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vehicleModal">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Vehicle
+
+        </button>
+    </div>
+    <!-- Add Button Ends -->
+</div>
 
 <!-- Create Modal-->
 <div class="modal fade modal-lg" id="vehicleModal">
@@ -68,8 +97,8 @@
 </div>
 <!-- Create Modal Ends -->
 
-
-<table id="vehicleTable">
+<!-- Table -->
+<table id="vehicleTable" class="table">
 
     <thead>
 
@@ -83,11 +112,13 @@
 
             <th>Type</th>
 
+            <th>Odometer</th>
+
             <th>Capacity</th>
 
-            <th>Status</th>
+            <th>Acquisition Cost</th>
 
-            <th>Action</th>
+            <th>Status</th>
 
         </tr>
 
@@ -113,14 +144,18 @@
 
                 <td>
 
-                    <%= vehicle.vehicle_name %>
+                    <%= vehicle.model %>
 
                 </td>
 
                 <td>
 
-                    <%= vehicle.vehicle_type %>
+                    <%= vehicle.type %>
 
+                </td>
+
+                <td>
+                    <%= vehicle.odometer %>
                 </td>
 
                 <td>
@@ -130,16 +165,16 @@
                 </td>
 
                 <td>
-
-                    Status Badge
-
+                    <%= vehicle.acquisition_cost %>
                 </td>
 
                 <td>
+                    <span class="badge bg-<%= display_vehicle_status[vehicle.status].class %>">
 
-                    Edit
+                    <%= display_vehicle_status[vehicle.status].text %>
 
-                    Delete
+                    </span>
+                    
 
                 </td>
 
@@ -150,3 +185,5 @@
     </tbody>
 
 </table>
+
+<!-- Table -->

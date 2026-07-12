@@ -1,5 +1,42 @@
 $(document).ready(function () {
 
+    //Filter Process
+    const table = $('#vehicleTable').DataTable({
+        dom: 'lrtip',
+        pageLength: 10,
+        ordering: true,
+        info: true
+    });
+
+    // Filter by Status
+    $('#status_filter').on('change', function () {
+
+        const value = $.fn.dataTable.util.escapeRegex($(this).val());
+
+        table.column(7)
+            .search(value ? value : '', true, false)
+            .draw();
+
+    });
+
+    // Filter by Vehicle Type
+    $('#vehicle_type_filter').on('change', function () {
+
+        const value = $.fn.dataTable.util.escapeRegex($(this).val());
+
+        table.column(3)
+            .search(value ? value : '', true, false)
+            .draw();
+
+    });
+
+    // Search only Vehicle Number column
+    $('#search_registration_no').on('keyup', function () {
+        table.column(1)
+            .search(this.value)
+            .draw();
+    });
+
     //Save Process
     $('#save-vehicle').on('click',function(){
         let registration_no = $('#registration_no').val();
@@ -34,6 +71,7 @@ $(document).ready(function () {
             });
             return;
         }
+        $('#save-vehicle').hide();
         $.ajax({
                 url: "/vehicles/save",
                 type: "POST",
@@ -50,12 +88,14 @@ $(document).ready(function () {
                     if (res.status) {
                         Swal.fire({
                             icon: "success",
-                            text: res.message
+                            text: res.message,
+                            timer: 1000,
+                            showConfirmButton: false
                         }).then(() => {
                             location.reload();
-
                         });
                     } else {
+                        $('#save-vehicle').show();
                         Swal.fire({
                             icon: "error",
                             text: res.message

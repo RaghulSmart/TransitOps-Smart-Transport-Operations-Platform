@@ -3,7 +3,7 @@ const db = require("../config/db");
 exports.index = async (req, res) => {
 
     const [vehicles] = await db.query(
-        "SELECT * FROM vehicles ORDER BY id DESC"
+        "SELECT v.*, vm.model, vt.type FROM vehicles v, vehicle_models vm, vehicle_types vt WHERE v.vehicle_type_id = vt.id AND v.vehicle_model_id = vm.id ORDER BY id DESC"
     );
 
     const [vehicle_models] = await db.query(
@@ -23,12 +23,31 @@ exports.index = async (req, res) => {
             text  : "Retired" 
         }
     ];
+    const display_vehicle_status = {
+        "available" : {
+            "class" : "success",
+            "text" : "Available"
+        },
+        "retired" : {
+            "class" : "danger",
+            "text" : "Retired"
+        },
+        "in_shop" : {
+            "class" : "info",
+            "text" : "In Shop"
+        },
+        "on_trip" : {
+            "class" : "warning",
+            "text" : "On Trip"
+        }
+    };
     res.render("vehicles/index", {
         vehicles,
         vehicle_models,
         vehicle_types,
         vehicle_status,
         user: req.session.user,
+        display_vehicle_status,
         footer_scripts:"<script src='/js/vehicle.js'></script>"
     });
 
