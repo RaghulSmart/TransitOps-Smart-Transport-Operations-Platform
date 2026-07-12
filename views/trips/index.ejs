@@ -1,0 +1,166 @@
+<div class="row mb-5">
+
+    <!-- Add Button -->
+    <div class="col-12 d-flex align-items-center justify-content-end">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tripModal">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Trip
+
+        </button>
+    </div>
+    <!-- Add Button Ends -->
+
+</div>
+
+
+
+<!-- Create Modal-->
+<div class="modal fade modal-lg" id="tripModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <% let is_resource_available = 0; if( vehicles.length == 0 ) { %>
+                <div class="modal-header">
+                    <h5>Sorry, no vehicle is available right now !</h5>
+                </div>
+            <% } else if ( drivers.length ==0 ) { %> 
+                <div class="modal-header">
+                    <h5>Sorry, no driver is available right now !</h5>
+                </div>
+            <% } else { 
+                is_resource_available = 1; %>
+                <div class="modal-header">
+                    <h5 class="modal-title">Create a new trip : <b>Draft</b></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="vehicle">Select Vehicle</label>
+                        <select class="form-select" id="vehicle">
+                            <% for(let vehicle of vehicles) { %>
+                                <option value="<%-vehicle.id%>"><%- vehicle.vehicle_name %></option>
+                                <% } %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="driver">Select Driver</label>
+                        <select class="form-select" id="driver">
+                            <% for(let driver of drivers) { %>
+                                <option value="<%-driver.id%>"><%- driver.name %></option>
+                                <% } %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="revenue" class="form-label">Revenue</label>
+                        <input type="number" min="1" class="form-control" id="revenue"
+                            placeholder="Revenue" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="source" class="form-label">Source Place</label>
+                        <input type="text" id="source" minlength="1" class="form-control" placeholder="Mumbai" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="destination" class="form-label">Destination Place</label>
+                        <input type="text" id="destination" minlength="1" class="form-control" placeholder="Pune" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cargo_weight" class="form-label">Enter Cargo Weight</label>
+                        <input type="number" min="1" minlength="500000" maxlength="10" class="form-control" id="cargo_weight"
+                            placeholder="Weight in KG" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="planned_distance" class="form-label">Planned Distance</label>
+                        <input type="number" min="1" max="10000" class="form-control" id="planned_distance"
+                            placeholder="Enter Planned Distance in KM" required>
+                    </div>
+                </div>
+             <% } %>   
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <% if(is_resource_available == 1 ) {%>
+                <button type="button" class="btn btn-primary" id="save-trip">Save changes</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Create Modal Ends -->
+
+<!-- Table -->
+<table id="tripsTable" class="table">
+
+    <thead>
+
+        <tr>
+
+            <th>Trip Code#</th>
+
+            <th>Trip Place</th>
+
+            <th>Vehicle</th>
+
+            <th>Driver</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <% trips.forEach(function(trip,index){ %>
+
+            <tr>
+
+                <td>
+
+                    <%= String(trip.trip_code).padStart(5,'0') %>
+
+                </td>
+
+                <td>
+
+                    <%= trip.place %>
+
+                </td>
+
+                <td>
+
+                    <%= trip.model %>
+
+                </td>
+
+                <td>
+
+                    <%= trip.name %>
+
+                </td>
+
+                <td>
+                    <span class="badge bg-<%= display_trip_status[trip.status].class %>">
+
+                        <%= display_trip_status[trip.status].text %>
+
+                    </span>
+
+                </td>
+
+                <td>
+                    <% if( trip.status == "dispatched" ) { %>
+                        <button class="btn btn-primary">Mark as Completed</button>
+                    <% } %>
+                </td>
+
+            </tr>
+
+            <% }) %>
+
+    </tbody>
+
+</table>
+
+<!-- Table -->

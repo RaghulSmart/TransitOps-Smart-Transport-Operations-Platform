@@ -3,10 +3,10 @@ const router = express.Router();
 
 const auth = require("../middleware/auth");
 
-router.get("/", auth, (req, res) => {
+const controller = require("../controllers/tripsController");
 
-    res.send("Trips Module");
+router.get("/", auth, controller.index);
 
-});
+router.post("/save", auth, controller.save);
 
 module.exports = router;
