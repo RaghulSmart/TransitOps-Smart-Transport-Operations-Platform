@@ -1,0 +1,179 @@
+<div class="row mb-5">
+    <div class="col-3">
+        <label class="form-label" for="status_filter">Filter Status</label>
+        <select id="status_filter" class="form-control">
+            <option value="">All</option>
+            <% for(let driver_status in display_driver_status) {%>
+                <option value="<%-display_driver_status[driver_status].text%>">
+                    <%-display_driver_status[driver_status].text%></option>
+                <%} %>
+        </select>
+    </div>
+
+    <!-- Add Button -->
+    <div class="col-3 d-flex align-items-center justify-content-end">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#driverModal">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Driver
+
+        </button>
+    </div>
+    <!-- Add Button Ends -->
+</div>
+
+<!-- Create Modal-->
+<div class="modal fade modal-lg" id="driverModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create a new driver</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" minlength="3" maxlength="100" class="form-control" id="name" placeholder="Name"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="license_number" class="form-label">License Number</label>
+                    <input type="text" minlength="15" maxlength="16" class="form-control" id="license_number"
+                        placeholder="TN0120110001234" required>
+                </div>
+                <div class="mb-3">
+                    <label for="license_category" class="form-label">License Category</label>
+                    <input type="text" minlength="3" maxlength="6" class="form-control" id="license_category"
+                        placeholder="LMV" required>
+                </div>
+                <div class="mb-3">
+                    <label for="license_expiry" class="form-label">Select License Expiry Date</label>
+                    <input type="date" class="form-control" id="license_expiry" placeholder="License Expiry Date"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Enter Phone Number</label>
+                    <input type="number" min="1" minlength="10" maxlength="10" class="form-control" id="phone"
+                        placeholder="Phone Number" required>
+                </div>
+                <div class="mb-3">
+                    <label for="safety_score" class="form-label">Safety Score</label>
+                    <input type="number" min="1" max="100" class="form-control" id="safety_score"
+                        placeholder="Enter Safety Score" required>
+                </div>
+                <div class="mb-3">
+                    <label for="driver_status">Status</label>
+                    <select class="form-select" id="driver_status">
+                        <% for(let status of driver_status) { %>
+                            <option value="<%-status.value%>"><%- status.text %></option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-driver">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Create Modal Ends -->
+
+<!-- Table -->
+<table id="driversTable" class="table">
+
+    <thead>
+
+        <tr>
+
+            <th>#</th>
+
+            <th>Name</th>
+
+            <th>License Number</th>
+
+            <th>License Category</th>
+
+            <th>License Expiry Date</th>
+
+            <th>Phone</th>
+
+            <th>Safety Score</th>
+
+            <th>Status</th>
+
+            <th>Last Updated</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <% drivers.forEach(function(driver,index){ %>
+
+            <tr>
+
+                <td>
+
+                    <%= index+1 %>
+
+                </td>
+
+                <td>
+
+                    <%= driver.name %>
+
+                </td>
+
+                <td>
+
+                    <%= driver.license_number %>
+
+                </td>
+
+                <td>
+
+                    <%= driver.license_category %>
+
+                </td>
+
+                <td>
+                    <%= new Date(  driver.license_expiry ).toLocaleDateString('en-IN') %>
+                </td>
+
+                <td>
+
+                    <a href="tel+<%= driver.phone %>"><%= driver.phone %></a>
+
+                </td>
+
+                <td>
+                    <%= driver.safety_score %>
+                </td>
+
+                <td>
+                    <span class="badge bg-<%= display_driver_status[driver.status].class %>">
+
+                        <%= display_driver_status[driver.status].text %>
+
+                    </span>
+
+                </td>
+
+                <td>
+                    <%=new Date( driver.updated_at).toLocaleString('en-IN', { year: 'numeric' , month: '2-digit' ,
+                        day: '2-digit' , hour: '2-digit' , minute: '2-digit' , second: '2-digit' , hour12: false }) %>
+                </td>
+
+            </tr>
+
+            <% }) %>
+
+    </tbody>
+
+</table>
+
+<!-- Table -->

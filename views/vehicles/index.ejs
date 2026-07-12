@@ -25,7 +25,7 @@
     </div>
 
     <!-- Add Button -->
-     <div class="col-3">
+     <div class="col-3 d-flex align-items-center justify-content-end">
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vehicleModal">
 
             <i class="bi bi-plus-circle"></i>
@@ -79,7 +79,7 @@
                 <input type="number" min="0" class="form-control" id="acquisition_cost" placeholder="Enter Acquisition Cost" required>
             </div>
             <div class="mb-3">
-                <label for="vehicle_type">Status</label>
+                <label for="vehicle_status">Status</label>
                 <select class="form-select" id="vehicle_status">
                     <% for(let status of vehicle_status) { %>
                         <option value="<%-status.value%>"><%- status.text %></option>
